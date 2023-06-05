@@ -6,6 +6,9 @@
 # Description: This flask application
 
 import json
+import const
+# import err_obj
+
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 
@@ -30,8 +33,6 @@ from google.cloud import datastore
 #      - https://auth0.com/docs/quickstart/backend/python/01-authorization
 #
 # -------------------------------------------------------------------------------
-
-BOATS = 'boats'
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -103,13 +104,17 @@ def get_resp(content, status):
     return response
 
 
-def get_entity(id):
+def get_entity(entity, id):
     """Helper method for retrieving an entity stored on datastore
 
     Return a datastore object
     """
-    key = client.key(BOATS, int(id))
+    key = client.key(entity, int(id))
     return client.get(key)
+
+
+def create_entity():
+    pass
 
 
 # Format error response and append status code
@@ -239,6 +244,10 @@ def login():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session['user'] = token
+    user_id = token['userinfo']['sub']
+    entity = get_entity(const.USERS, user_id)
+    if not entity:
+        create_entity()
     return redirect('/')
 
 
@@ -290,7 +299,7 @@ def boats_post_get():
         if results.err is not None:
             return results.err
         content = request.get_json()
-        new_boat = datastore.entity.Entity(key=client.key(BOATS))
+        new_boat = datastore.entity.Entity(key=client.key(const.BOATS))
         new_boat.update({'name': content['name'],
                          'type': content['type'],
                          'length': content['length'],
@@ -301,7 +310,7 @@ def boats_post_get():
         return get_resp(new_boat, 201)
 
     elif request.method == 'GET':
-        query = client.query(kind=BOATS)
+        query = client.query(kind=const.BOATS)
         results = verify_jwt(request)
         if results.err is not None:
             query.add_filter('public', '=', True)
@@ -363,7 +372,7 @@ def owners_boats_get(owner_id):
     error message.
     """
     if request.method == 'GET':
-        query = client.query(kind=BOATS)
+        query = client.query(kind=const.BOATS)
         query.add_filter('public', '=', True)
         query.add_filter('owner', '=', owner_id)
         boats = list(query.fetch())
