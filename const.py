@@ -1,12 +1,8 @@
 # A file that holds useful constants
-
-import string
-
 USERS = 'users'
 BOATS = 'boats'
 LOADS = 'loads'
 APP_JSON = 'application/json'
-TEXT_HTML = 'text/html'
 TEXT_PLAIN = 'text/plain'
-KEYS = ['name', 'type', 'length']
-VALID_CHAR_SET = set(string.ascii_letters + string.digits + "!-.? ',&/")
+BASE_LOCAL_URL = 'http://127.0.0.1:8080'
+BASE_GAE_URL = 'https://project-lubranoa.uc.r.appspot.com'

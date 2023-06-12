@@ -1,13 +1,15 @@
 # Author: Alexander Lubrano
 # Course: CS 493
-# Assignment: Assignment 7 - More Authentication and Authorization
-# Date: 05/22/2023
+# Assignment: Portfolio Project
+# Date: 06/11/2023
 # File: main.py
 # Description: This flask application
 
 import json
 import const
-# import err_obj
+import err_obj
+import boats
+import loads
 
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
@@ -46,6 +48,8 @@ ALGORITHMS = ['RS256']
 app = Flask(__name__)
 app.secret_key = env.get('APP_SECRET_KEY')
 client = datastore.Client()
+
+BASE_URL = const.BASE_GAE_URL
 
 
 # Error handling class
@@ -97,10 +101,12 @@ def get_auth_error_resp(err):
     return response
 
 
-def get_resp(content, status):
+def get_resp(content, status, make_json=True):
     """Create a general response object"""
     response = make_response(jsonify(content))
     response.status_code = status
+    if not make_json:
+        response.mimetype = const.TEXT_PLAIN
     return response
 
 
@@ -109,12 +115,19 @@ def get_entity(entity, id):
 
     Return a datastore object
     """
-    key = client.key(entity, int(id))
+    key = client.key(entity, id)
     return client.get(key)
 
 
-def create_entity():
-    pass
+def create_entity(key_val, info, id=None):
+    if id is None:
+        new_key = client.key(key_val)
+    else:
+        new_key = client.key(key_val, id)
+    entity = datastore.Entity(key=new_key)
+    entity.update(info)
+    client.put(entity)
+    return entity
 
 
 # Format error response and append status code
@@ -233,6 +246,10 @@ def verify_jwt(req):
         return results
 
 
+app.register_blueprint(boats.bp)
+app.register_blueprint(loads.bp)
+
+
 @app.route('/login')
 def login():
     return oauth.auth0.authorize_redirect(
@@ -247,7 +264,10 @@ def callback():
     user_id = token['userinfo']['sub']
     entity = get_entity(const.USERS, user_id)
     if not entity:
-        create_entity()
+        create_entity(
+            const.USERS,
+            {'name': token['userinfo']['name']},
+            user_id)
     return redirect('/')
 
 
@@ -275,120 +295,26 @@ def index():
         pretty=json.dumps(session.get('user'), indent=4))
 
 
-@app.route('/boats', methods=['POST', 'GET'])
-def boats_post_get():
-    """Handles requests to /boats route.
+@app.route('/users', methods=['GET'])
+def users_get():
+    """"""
+    if const.APP_JSON not in request.accept_mimetypes:
+        return get_resp(err_obj.WRONG_ACCEPT_406['msg'],
+                        err_obj.WRONG_ACCEPT_406['status'],
+                        False)
 
-    If POST, validates the sent JWT. If JWT is valid, create a boat, set
-    boat's owner to JWT's 'sub' value, put the boat on datastore, and return a
-    response with status 201 that contains created boat info. If JWT is invalid
-    or no JWT was provided, return a response with status 401 that contains
-    any error info.
-
-    If GET, validates the sent JWT. If JWT is valid, return response with
-    status 200 that contains an array of all boats whose 'owner' value matches
-    the JWT's 'sub' value. If JWT is invalid or no JWT was provided, return a
-    response with status 200 that contains an array of all boats whose 'public'
-    value is set to True regardless of owner.
-
-    If disallowed method, returns a response with status 405 that contains an
-    error message.
-    """
-    if request.method == 'POST':
-        results = verify_jwt(request)
-        if results.err is not None:
-            return results.err
-        content = request.get_json()
-        new_boat = datastore.entity.Entity(key=client.key(const.BOATS))
-        new_boat.update({'name': content['name'],
-                         'type': content['type'],
-                         'length': content['length'],
-                         'public': content['public'],
-                         'owner': results.payload['sub']})
-        client.put(new_boat)
-        new_boat['id'] = new_boat.key.id
-        return get_resp(new_boat, 201)
-
-    elif request.method == 'GET':
-        query = client.query(kind=const.BOATS)
-        results = verify_jwt(request)
-        if results.err is not None:
-            query.add_filter('public', '=', True)
-        else:
-            query.add_filter('owner', '=', results.payload['sub'])
-        boats = list(query.fetch())
-        for boat in boats:
-            boat['id'] = boat.key.id
-        return get_resp(boats, 200)
-
-    else:
-        return get_resp({'error': 'Method not allowed'}, 405)
-
-
-@app.route('/boats/<id>', methods=['DELETE'])
-def boats_delete(id):
-    """Handles requests to /boats route.
-
-    If DELETE, validates the sent JWT. Only deletes a boat if the sent JWT is
-    valid, the boat exists, and the JWT's 'sub' value matches the boat's
-    'owner' value. Then, delete the boat and return a response with status 204
-    that contains no content.
-
-    If JWT is invalid or no JWT was provided, return a response with status 401
-    that contains any error info. If JWT is valid but no boat with the supplied
-    boat id exists, return response with status 403 that contains an error
-    message. If JWT is valid and the boat exists but is owned by a different
-    owner, return response with status 403 that contains an error message.
-
-    If disallowed method, returns a response with status 405 that contains an
-    error message.
-    """
-    if request.method == 'DELETE':
-        results = verify_jwt(request)
-        if results.err is not None:
-            return results.err
-        boat = get_entity(id)
-        if boat is None:
-            return get_resp({'error': 'No boat with this boat id exists'}, 403)
-        if results.payload['sub'] != boat['owner']:
-            return get_resp({'error': 'Boat is owned by someone else'}, 403)
-        client.delete(boat)
-        return get_resp(None, 204)
-    else:
-        return get_resp({'error': 'Method not allowed'}, 405)
-
-
-@app.route('/owners/<owner_id>/boats', methods=['GET'])
-def owners_boats_get(owner_id):
-    """Handles requests to /owners/:owner_id/boats route.
-
-    If GET, returns a response with status 200 that contains an array of all
-    boats whose 'owner' value matches the supplied owner id and whose 'public'
-    values are set to True regardless of valid, invalid, or missing JWTs. If
-    the owner has no public boats, returns a response with status 200 that
-    contains an empty array.
-
-    If disallowed method, returns a response with status 405 that contains an
-    error message.
-    """
     if request.method == 'GET':
-        query = client.query(kind=const.BOATS)
-        query.add_filter('public', '=', True)
-        query.add_filter('owner', '=', owner_id)
-        boats = list(query.fetch())
-        for boat in boats:
-            boat['id'] = boat.key.id
-        return get_resp(boats, 200)
+        query = client.query(kind=const.USERS)
+        users = list(query.fetch())
+        for user in users:
+            user['id'] = user.key.id
+        return get_resp(users, 200)
+
     else:
-        return get_resp({'error': 'Method not allowed'}, 405)
-
-
-# Decode the JWT supplied in the Authorization header
-@app.route('/decode', methods=['GET'])
-def decode_jwt():
-    payload = verify_jwt(request)
-    return get_resp(payload.payload, 200)
+        return get_resp(err_obj.DISALLOWED_METHOD_405['msg'],
+                        err_obj.DISALLOWED_METHOD_405['status'])
 
 
 if __name__ == '__main__':
+    BASE_URL = const.BASE_LOCAL_URL
     app.run(host='127.0.0.1', port=8080, debug=True)

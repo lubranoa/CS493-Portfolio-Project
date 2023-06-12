@@ -1,4 +1,6 @@
 # Error message objects containing a message and appropriate 40* status code
+
+
 MISSING_ATTR_400 = {
     'msg': {'Error': 'The request object is missing at least one '
             'of the required attributes'},
@@ -32,18 +34,13 @@ NO_BOAT_FOUND_404 = {
     'status': 404
 }
 
-CANT_PUT_405 = {
-    'msg': {'Error': 'Cannot perform PUT on all boats'},
-    'status': 405
-}
-
-CANT_DELETE_405 = {
-    'msg': {'Error': 'Cannot perform DELETE on all boats'},
+DISALLOWED_METHOD_405 = {
+    'msg': {'Error': 'Method not allowed'},
     'status': 405
 }
 
 WRONG_ACCEPT_406 = {
-    'msg': {'Error': 'Client Accept header set to unsupported MIME type'},
+    'msg': {'Error': 'Client Accept header not set to application/json'},
     'status': 406
 }
 
