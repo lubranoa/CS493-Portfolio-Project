@@ -3,6 +3,9 @@
 ## Description
 This project is a REST API implementation of a web server application using Google Cloud Platform (GCP). The goal of the project was to showcase the implementation of various features and requirements, including resource-based URLs, pagination, status codes, user authentication, and data storage using GCP Datastore. The application utilizes a Flask framework to build the web server that provides endpoints for creating, retrieving, updating, and deleting boat and load records. User records are created upon first login. It incorporates Auth0 authentication service to handle user authentication and authorization. Users can register, log in, and log out, while authenticated users have access to perform operations on boats and users. The data is securely stored in Google Cloud Datastore, ensuring efficient data management. Error handling and response formatting functionalities, like pagination, are also included to enhance the user experience. Full specifications are detailed in the Project Spec Sheet PDF.
 
+## Program Information
+Put some details about the data model, how to it should work/run, etc.
+
 ## Skills Used
 - REST API development:
   - The project involved designing and implementing a RESTful API using Python 3 and Flask. This included defining resource-based URLs, implementing CRUD (Create, Read, Update, Delete) operations for entities, and handling requests and responses.
