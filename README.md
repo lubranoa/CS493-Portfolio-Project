@@ -5,7 +5,27 @@
 This project is a REST API implementation of a web server application using Google Cloud Platform (GCP). The goal of the project was to showcase the implementation of various features and requirements, including resource-based URLs, pagination, status codes, user authentication, and data storage using GCP Datastore. The application utilizes a Flask framework to build the web server that provides endpoints for creating, retrieving, updating, and deleting Boat and Load records, while User records are created upon first login. It incorporates an Auth0 authentication service to handle user authentication and authorization. Users can register, log in, and log out, using a link supplied on the home page. The data is securely stored in Google Cloud Datastore, ensuring efficient data management. Error handling and response formatting functionalities, like pagination, are also included to enhance the user experience. Full specifications are detailed in the Project Spec Sheet PDF.
 
 ## Program Information
-Put some details about the data model, how to it should work/run, etc.
+The project requirements stated to provide a simple web page for the user to log in via Auth0, copy their current JWT token, and use it as a Bearer token to access their boats on this API. The project also stated for us to have three entities, Users, one user-dependent, and one user-independent. The two non-user entities must be dependent on each other as well. I chose to have Users, Boats, and Loads as my three. Boats are dependent on Users (Users own them) so a user can only access their Boats and nobody else's. Loads are independent of users (not owned by Users) and can view all Loads but the user must still be authorized. Loads are dependent on Boats (Loads can be put on Boats). The project requirements had us access the API using Postman, so we pasted the JWT token into a Postman environment variable. One other note is that no input-validation was required. The graders followed the written specification's guidelines on any values sent to the API.
+
+The following are some highlights of the program. Full specifications can be found in this PDF. 
+1. Login
+   - The first step of this program is for the user to login or create an account. This was implemented through Auth0.
+
+   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/welcome_page.png)
+
+   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/auth0_login.png)
+
+2. Get Token
+   - After successful login, the user's information on Auth0 is displayed. If this is the first time the user has logged in, a User entity is created for them on the Datastore database. Then the user must copy the value of the "id_token" for use as a bearer token.
+
+   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/jwt_info.png)
+   
+3. Create a Boat (Create User-Boat dependency)
+4. Create a Load (No User-dependency)
+5. Add/Remove a Load to/from a Boat (Add/remove Boat-Load dependency)
+6. Delete a Boat containing a Load (Removes User-Boat and Boat-Load dependencies)
+7. Delete a Load loaded on a Boat (Removes Boat-Load dependency)
+
 
 ## Skills Used
 - REST API development:

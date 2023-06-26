@@ -13,6 +13,12 @@
 .git
 .gitignore
 
+# README, docs, and other files
+/assets
+README.md
+lubranoa_project.postman_collection.json
+lubranoa_project.postman_environment.json
+
 # Python pycache:
 __pycache__/
 # Ignored by the build system
