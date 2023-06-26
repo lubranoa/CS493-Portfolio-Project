@@ -3,7 +3,9 @@
 # Assignment: Portfolio Project
 # Date: 06/11/2023
 # File: main.py
-# Description: This flask application
+
+# TODO: Add authentication to load routes
+# TODO: Add comments
 
 import json
 import const
@@ -24,7 +26,7 @@ from jose import jwt
 from google.cloud import datastore
 
 # -------------------------------------------------------------------------------
-# Much of this program is adapted from three sources:
+# Some of this program is adapted from three sources:
 #
 #   1) Example program from Exploration - Authentication in Python
 #   2) Auth0 Python Tutorial:
@@ -551,6 +553,8 @@ def loads_post_get():
 
     if request.method == 'POST':
 
+        # TODO: Add authorization
+
         if request.mimetype != const.APP_JSON:
             return get_resp(err_obj.WRONG_TYPE_415['msg'],
                             err_obj.WRONG_TYPE_415['status'])
@@ -571,6 +575,9 @@ def loads_post_get():
         return get_resp(new_load, 201)
 
     elif request.method == 'GET':
+
+        # TODO: Add authorization
+
         query = client.query(kind=const.LOADS)
 
         q_limit = int(request.args.get('limit', '5'))
@@ -617,6 +624,8 @@ def load_del_get_put_patch(id):
 
     if request.method != 'POST':
 
+        # TODO: Add authorization
+
         load = get_entity(const.LOADS, int(id))
 
         if load is None:
@@ -633,6 +642,7 @@ def load_del_get_put_patch(id):
             return get_resp(None, 204)
 
         elif request.method == 'PATCH':
+
             if request.mimetype != const.APP_JSON:
                 return get_resp(err_obj.WRONG_TYPE_415['msg'],
                                 err_obj.WRONG_TYPE_415['status'])
