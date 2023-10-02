@@ -4,13 +4,17 @@
 ## Description
 This project is a REST API implementation of a web server application using Google Cloud Platform (GCP). The goal of the project was to showcase the implementation of various features and requirements, including resource-based URLs, pagination, status codes, user authentication, and data storage using GCP Datastore. The application utilizes a Flask framework to build the web server that provides endpoints for creating, retrieving, updating, and deleting Boat and Load records, while User records are created upon first login. It incorporates an Auth0 authentication service for user authentication and authorization with the API. Users can register, log in, and log out, using a link supplied on the home page. The data is securely stored in Google Cloud Datastore, ensuring efficient data management. Error handling and response formatting functionalities, like pagination, are also included to enhance the user experience. Full specifications are detailed in the [Project Spec Sheet PDF](/assets/documents/lubranoa_project.pdf).
 
-## Program Information
+## Project Information
 The project requirements stated to provide a simple web page for the user to log in via Auth0, copy their current JWT token, and use it as a Bearer token to access their boats on this API. The project also stated for us to have three entities, Users, one user-dependent, and one user-independent. The two non-user entities must be dependent on each other. The project requirements also stated that no input-validation was required. The graders followed the guidelines written in the specifications document for any values sent to the API.
 
 This API uses Users, Boats, and Loads as my three entities. Boats are dependent on Users (Users own them) so a user can only access their Boats and nobody else's. Loads are independent of users (not owned by Users). Users can view all Loads but the user must still be authorized. Loads are dependent on Boats (Loads can be put on Boats). The project requirements had us access the API using Postman, so we pasted the JWT token into a Postman environment variable for use in testing the API.
 
 One thing of note is that all of the responses this API sends back to the user will have an appropriate 20* and 4** status code depending on the type of request and whether the operation was successful or not. A full list of supported status codes per type of request is available in the project PDF. Another thing to note is that, for all responses with body content, all of the "self" attributes and values are not stored on Datastore but are added to the response by the API.
 
+## Project Tech Stack
+   * [![Next][Next.js]][Next-url]
+
+## Project Highlights
 The following are some highlights of the program. Full specifications can be found in [this PDF](/assets/documents/lubranoa_project.pdf).
 
 1. Simple Login Website using Auth0
