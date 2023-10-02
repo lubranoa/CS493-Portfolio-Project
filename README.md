@@ -11,22 +11,50 @@ The following are some highlights of the program. Full specifications can be fou
 1. Login
    - The first step of this program is for the user to login or create an account. This was implemented through Auth0.
 
-   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-welcome_page.png)
+   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-01a-welcome_page.png)
 
-   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-auth0_login.png)
+   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-01b-auth0_login.png)
 
 2. Get Token
    - After successful login, the user's information on Auth0 is displayed. If this is the first time the user has logged in, a User entity is created for them on the Datastore database. Then the user must copy the value of the "id_token" for use as a bearer token.
 
-   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-jwt_info.png)
+   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-02-jwt_info.png)
 
 3. Create a Boat (Create User-Boat dependency)
    - A create Boat request must have the copied JWT as a bearer token and must have a body with the three required attributes. If successfully created, a Boat is created with a Datastore generated ID, the three attributes, no loads, and an owner ID which is the 'sub' value from the JWT. The self attribute and value are not stored on Datastore but are created by the application.
 
-   ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-create-boat.png)
+   ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-03-create-boat.png)
 
 4. Create a Load (No User-dependency)
+   - A create Load request.
+
+   ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-04-create-load.png)
+
 5. Add/Remove a Load to/from a Boat (Add/remove Boat-Load dependency)
+   - Empty Boat
+
+    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05a-boat-no-load.png)
+    
+   - A put request for putting load on a boat
+
+    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05b-add-load-to-boat.png)
+
+   - Non-empty boat
+
+    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05c-load-added.png)
+
+   - Load has a carrier
+
+    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05d-load-with-carrier.png)
+
+    - Remove load from boat
+
+    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05e-del-load-off-boat.png)
+
+    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05f-load-removed.png)
+
+    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05g-load-carrier-removed.png)
+
 6. Delete a Boat containing a Load (Removes User-Boat and Boat-Load dependencies)
 7. Delete a Load loaded on a Boat (Removes Boat-Load dependency)
 
