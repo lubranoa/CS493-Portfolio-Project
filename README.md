@@ -11,8 +11,13 @@ This API uses Users, Boats, and Loads as my three entities. Boats are dependent 
 
 One thing of note is that all of the responses this API sends back to the user will have an appropriate 20* and 4** status code depending on the type of request and whether the operation was successful or not. A full list of supported status codes per type of request is available in the project PDF. Another thing to note is that, for all responses with body content, all of the "self" attributes and values are not stored on Datastore but are added to the response by the API.
 
-## Project Tech Stack
-   * [![Next][Next.js]][Next-url]
+## Project Built With
+   * [![Python][Python]][Python-url]
+   * [![Flask][Flask]][Flask-url]
+   * [![Auth0][Auth0]][Auth0-url]
+   * [![Google Cloud][Google-cloud]][Google-cloud-url]
+   * [![Postman][Postman]][Postman-url]
+   * [![Dotenv][Dotenv]][Dotenv-url]
 
 ## Project Highlights
 The following are some highlights of the program. Full specifications can be found in [this PDF](/assets/documents/lubranoa_project.pdf).
@@ -99,3 +104,23 @@ The following are some highlights of the program. Full specifications can be fou
   - The project required creating an API specification document that details all the endpoints, their protected/unprotected status, valid status codes, sample requests, and responses. Clear and concise documentation was essential to provide a comprehensive understanding of the API's functionality.
 
 ## Resources
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=ffd343
+[Python-url]: https://www.python.org/
+
+[Flask]: https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask
+[Flask-url]: https://flask.palletsprojects.com/en/3.0.x/
+
+[Auth0]: https://img.shields.io/badge/Auth0-16214d?style=for-the-badge&logo=auth0
+[Auth0-url]: https://auth0.com/
+
+[Google-cloud]: https://img.shields.io/badge/Google%20Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white
+[Google-cloud-url]: https://cloud.google.com/
+
+[Postman]: https://img.shields.io/badge/Postman-ef5b25?style=for-the-badge&logo=postman&logoColor=white
+[Postman-url]: https://www.postman.com/
+
+[Dotenv]: https://img.shields.io/badge/Dotenv-000000?style=for-the-badge&logo=dotenv&logoColor=ecd53f
+[Dotenv-url]: https://pypi.org/project/python-dotenv/
