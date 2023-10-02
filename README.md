@@ -2,61 +2,78 @@
 #### A RESTful API for Managing Assets on the Google Cloud Platform with Auth0 Authentication
 
 ## Description
-This project is a REST API implementation of a web server application using Google Cloud Platform (GCP). The goal of the project was to showcase the implementation of various features and requirements, including resource-based URLs, pagination, status codes, user authentication, and data storage using GCP Datastore. The application utilizes a Flask framework to build the web server that provides endpoints for creating, retrieving, updating, and deleting Boat and Load records, while User records are created upon first login. It incorporates an Auth0 authentication service to handle user authentication and authorization. Users can register, log in, and log out, using a link supplied on the home page. The data is securely stored in Google Cloud Datastore, ensuring efficient data management. Error handling and response formatting functionalities, like pagination, are also included to enhance the user experience. Full specifications are detailed in the [Project Spec Sheet PDF](/assets/documents/lubranoa_project.pdf).
+This project is a REST API implementation of a web server application using Google Cloud Platform (GCP). The goal of the project was to showcase the implementation of various features and requirements, including resource-based URLs, pagination, status codes, user authentication, and data storage using GCP Datastore. The application utilizes a Flask framework to build the web server that provides endpoints for creating, retrieving, updating, and deleting Boat and Load records, while User records are created upon first login. It incorporates an Auth0 authentication service for user authentication and authorization with the API. Users can register, log in, and log out, using a link supplied on the home page. The data is securely stored in Google Cloud Datastore, ensuring efficient data management. Error handling and response formatting functionalities, like pagination, are also included to enhance the user experience. Full specifications are detailed in the [Project Spec Sheet PDF](/assets/documents/lubranoa_project.pdf).
 
 ## Program Information
-The project requirements stated to provide a simple web page for the user to log in via Auth0, copy their current JWT token, and use it as a Bearer token to access their boats on this API. The project also stated for us to have three entities, Users, one user-dependent, and one user-independent. The two non-user entities must be dependent on each other as well. I chose to have Users, Boats, and Loads as my three. Boats are dependent on Users (Users own them) so a user can only access their Boats and nobody else's. Loads are independent of users (not owned by Users) and can view all Loads but the user must still be authorized. Loads are dependent on Boats (Loads can be put on Boats). The project requirements had us access the API using Postman, so we pasted the JWT token into a Postman environment variable. One other note is that no input-validation was required. The graders followed the written specification's guidelines on any values sent to the API.
+The project requirements stated to provide a simple web page for the user to log in via Auth0, copy their current JWT token, and use it as a Bearer token to access their boats on this API. The project also stated for us to have three entities, Users, one user-dependent, and one user-independent. The two non-user entities must be dependent on each other. The project requirements also stated that no input-validation was required. The graders followed the guidelines written in the specifications document for any values sent to the API.
 
-The following are some highlights of the program. Full specifications can be found in [this PDF](/assets/documents/lubranoa_project.pdf). 
-1. Login
-   - The first step of this program is for the user to login or create an account. This was implemented through Auth0.
+This API uses Users, Boats, and Loads as my three entities. Boats are dependent on Users (Users own them) so a user can only access their Boats and nobody else's. Loads are independent of users (not owned by Users). Users can view all Loads but the user must still be authorized. Loads are dependent on Boats (Loads can be put on Boats). The project requirements had us access the API using Postman, so we pasted the JWT token into a Postman environment variable for use in testing the API.
 
-   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-01a-welcome_page.png)
+One thing of note is that all of the responses this API sends back to the user will have an appropriate 20* and 4** status code depending on the type of request and whether the operation was successful or not. A full list of supported status codes per type of request is available in the project PDF. Another thing to note is that, for all responses with body content, all of the "self" attributes and values are not stored on Datastore but are added to the response by the API.
 
-   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-01b-auth0_login.png)
+The following are some highlights of the program. Full specifications can be found in [this PDF](/assets/documents/lubranoa_project.pdf).
 
-2. Get Token
-   - After successful login, the user's information on Auth0 is displayed. If this is the first time the user has logged in, a User entity is created for them on the Datastore database. Then the user must copy the value of the "id_token" for use as a bearer token.
+1. Simple Login Website using Auth0
+   
+   This website provides a link for a user to begin a login process using Auth0. This redirects to an Auth0 page that allows a user to log in with their account or Google account or to sign up to use the website.
+
+   ![Screenshot of the simple login website with a login link.](/assets/images/493-01a-welcome_page.png)
+
+   ![Screenshot of the Auth0 login page with email and password fields, continue button, sign up link, and login with Google button.](/assets/images/493-01b-auth0_login.png)
+
+2. Logged in
+   
+   After successful login, the user's information on Auth0 is displayed. If this is the first time the user has logged in, a User entity is created for them on the Google Datastore database. For API access, the user must copy the value of the "id_token" for use as a bearer token when making API calls.
 
    ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-02-jwt_info.png)
 
 3. Create a Boat (Create User-Boat dependency)
-   - A create Boat request must have the copied JWT as a bearer token and must have a body with the three required attributes. If successfully created, a Boat is created with a Datastore generated ID, the three attributes, no loads, and an owner ID which is the 'sub' value from the JWT. The self attribute and value are not stored on Datastore but are created by the application.
+   
+   A create Boat POST request must have the copied JWT as a bearer token and must have a body with the three required attributes. If successful, a new Boat is created on Google Datastore with a Datastore generated ID, the three attributes, an empty loads array, an owner ID which is the 'sub' value from the Auth0 JWT, and a self attribute that contains a URL that points to the Boat.
 
-   ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-03-create-boat.png)
+   ![Screenshot of a Postman tab displaying a POST request using the user's JWT token to create a Boat object with a name, type, and length. The screenshot also displays a successful "201 Created" response from the API containing the new Boat object with an ID, name, type, length, an empty loads array, an owner ID, and a self attribute that contains a URL to the Boat.](/assets/images/493-03-create-boat.png)
 
 4. Create a Load (No User-dependency)
-   - A create Load request.
+   
+   A create Load POST request needs no authorization but must have a body with the three required attributes. If successful, a new Load is created on Datastore with a Datastore generated ID, the three attributes, a carrier attribute set to NULL, and a self attribute that contains a URL to the Load.
 
-   ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-04-create-load.png)
+   ![Screenshot of a Postman tab displaying a POST request to create a Load with an item name, volume, and creation date. The screenshot also displays a successful "201 Created" response from the API containing the new Load object with an ID, item, volume, creation date, carrier set to NULL, and a self attribute that contains a URL to the Load.](/assets/images/493-04-create-load.png)
 
-5. Add/Remove a Load to/from a Boat (Add/remove Boat-Load dependency)
-   - Empty Boat
-
-    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05a-boat-no-load.png)
+5. Add a Load to a Boat (Add Boat-Load dependency)
+   
+   - GET an empty Boat using a Boat's ID value and user's JWT token. User must be the owner of the boat to view it. Note the empty loads array.
+     
+     ![Screenshot of a Postman tab displaying a GET request to view a Boat object using its ID value in the URL and the user's JWT token. The screenshot also displays a successful "200 OK" response that contains the requested Boat object with no loads in the load array.](/assets/images/493-05a-boat-no-load.png)
     
-   - A put request for putting load on a boat
+   - PUT a Load on that Boat. This puts the Load's ID value into the loads array of the Boat and changes the Load's carrier attribute from NULL to the Boat's ID value. Then it updates both the Boat's and Load's objects on Datastore. User must be the owner of the Boat to put a Load on it.
+    
+     ![Screenshot of a Postman tab displaying a PUT request to put a Load on the previous Boat using their respective ID values in the URL and the user's JWT token. The screenshot also displays a "204 No Content" response from the API showing a successful PUT request was carried out.](/assets/images/493-05b-add-load-to-boat.png)
 
-    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05b-add-load-to-boat.png)
+     Boat contains a Load. The Boat now contains the Load's ID value in its loads array. The Load now contains the Boat's ID value in its carrier attribute.
+     
+     ![Screenshot of a Postman tab displaying a GET request to view the same Boat object using it's ID value in the URL and the user's JWT token. The screenshot also displays a successful "200 OK" response that contains the requested Boat object with a single Load ID in the load array.](/assets/images/493-05c-load-added.png)
 
-   - Non-empty boat
+     Load has a carrier Boat. The Load's carrier attribute is now set to the Boat's ID value.
+    
+     ![Screenshot of a Postman tab displaying a GET request to view the same Load object using it's ID value in the URL. The screenshot also displays a successful "200 OK" response that contains the requested Load object with the carrier attribute set to the Boat's ID that holds the Load.](/assets/images/493-05d-load-with-carrier.png)
 
-    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05c-load-added.png)
+6. Remove a Load from a Boat (Remove Boat-Load Dependency)
 
-   - Load has a carrier
+   - DELETE Load from Boat. This removes the Load from the Boat's loads and sets the Load's carrier attribute to NULL, then updates both entities on Datastore. Succeeds only if the Boat exists, the Load exists, this Load is on that Boat, and the User owns the Boat. The following three images show the DELETE request and the resulting Load and Boat GETs to verify deletion.
+    
+     ![Screenshot of a Postman tab displaying a DELETE request to remove the Load from the same Boat using their respective ID values in the URL and the user's JWT token. The screenshot also displays a "204 No Content" response from the API showing a successful DELETE request was carried out.](/assets/images/493-05e-del-load-off-boat.png)
+     ![Screenshot of a Postman tab displaying a GET request to view the same Boat object using it's ID value in the URL and the user's JWT token. The screenshot also displays a successful "200 OK" response that contains the requested Boat object with an empty loads array after removing the Load from the Boat.](/assets/images/493-05f-load-removed.png)
+     ![Screenshot of a Postman tab displaying a GET request to view the same Load object using it's ID value in the URL. The screenshot also displays a successful "200 OK" response that contains the requested Load object with the carrier attribute set to NULL after removing the Load from the Boat.](/assets/images/493-05g-load-carrier-removed.png)
 
-    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05d-load-with-carrier.png)
-
-    - Remove load from boat
-
-    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05e-del-load-off-boat.png)
-
-    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05f-load-removed.png)
-
-    ![Screenshot of a Postman request tab displaying a POST request to create a boat with a name, type, and length as well as a response from the sent request containing a new boat with an ID, name, type, length, no loads, an owner ID, and a self attribute that contains a URL to the boat.](/assets/images/493-05g-load-carrier-removed.png)
-
-6. Delete a Boat containing a Load (Removes User-Boat and Boat-Load dependencies)
-7. Delete a Load loaded on a Boat (Removes Boat-Load dependency)
+   
+7. Update Operations
+   - Use PATCH request to partially update a Boat or Load 
+   - Use PUT request to fully update a Boat or Load
+   
+8. Delete Operations
+   - DELETE a Boat or Load
+   - Special Case: Delete a Boat containing a Load (Removes User-Boat and Boat-Load dependencies)
+   - Special Case: Delete a Load loaded on a Boat (Removes Boat-Load dependency)
 
 
 ## Skills Used
