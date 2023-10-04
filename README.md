@@ -1,7 +1,10 @@
 <div align="center">
   <h1 align="center">Boat-Load REST API</h1>
-  <p align="center">
+  <h4 align="center">
     A RESTful API for Managing Assets on the Google Cloud Platform with Auth0 Authentication
+  </h4>
+  <p align="center">
+    Spring 2023 · CS 493 Cloud Application Development · Oregon State University
   </p>
   <br />
 </div>
@@ -35,7 +38,7 @@
 </details>
 
 ## Description
-This project from CS 493 - Cloud Application Development is a REST API implementation of a web server application using Google Cloud Platform (GCP). The goal of the project was to showcase the implementation of various features and requirements, including resource-based URLs, pagination, status codes, user authentication, and data storage using GCP Datastore. The application utilizes a Flask framework to build the web server that provides endpoints for creating, retrieving, updating, and deleting Boat and Load records, while User records are created upon first login. It incorporates an Auth0 authentication service for user authentication and authorization with the API. Users can register, log in, and log out, using a link supplied on the home page. The data is securely stored in Google Cloud Datastore, ensuring efficient data management. Error handling and response formatting functionalities, like pagination, are also included to enhance the user experience. Full specifications are detailed in the [Project Spec Sheet PDF](/assets/documents/lubranoa_project.pdf).
+This project from Cloud Application Development is a REST API implementation of a web server application using Google Cloud Platform (GCP). The goal of the project was to showcase the implementation of various features and requirements, including resource-based URLs, pagination, status codes, user authentication, and data storage using GCP Datastore. The application utilizes a Flask framework to build the web server that provides endpoints for creating, retrieving, updating, and deleting Boat and Load records, while User records are created upon first login. It incorporates an Auth0 authentication service for user authentication and authorization with the API. Users can register, log in, and log out, using a link supplied on the home page. The data is securely stored in Google Cloud Datastore, ensuring efficient data management. Error handling and response formatting functionalities, like pagination, are also included to enhance the user experience. Full specifications are detailed in the [Project Spec Sheet PDF](/assets/documents/lubranoa_project.pdf).
 
 ## Project Tech Stack
    * [![Python][Python]][Python-url]
