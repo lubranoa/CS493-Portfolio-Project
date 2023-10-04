@@ -1,14 +1,19 @@
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+<a name="readme-top"></a>
+
+<!-- Centered title section with descriptive lines -->
 <div align="center">
   <h1 align="center">Boat-Load REST API</h1>
-  <h4 align="center">
-    A RESTful API for Managing Assets on the Google Cloud Platform with Auth0 Authentication
-  </h4>
+  <p align="center">
+    <b>A RESTful API for Managing Assets on the Google Cloud Platform with Auth0 Authentication</b>
+  </p>
   <p align="center">
     Spring 2023 · CS 493 Cloud Application Development · Oregon State University
   </p>
   <br />
 </div>
 
+<!-- Table of Contents -->
 <details>
   <summary>Table of Contents</summary>
     
@@ -57,7 +62,7 @@ Some of the major project requirements from the assignment's guidelines:
    - Deploy a simple web page using GCP's App Engine for users to create an account and log in via Auth0, copy their current JWT token, and use it as a Bearer token to access the API using Postman. 
    - Must have three entities, Users, one User-dependent, and one User-independent. The two non-User entities must be dependent on each other in some way.
    - Have CRUD operations for each of the non-User entities. Each operation for the User-dependent entity must be protected and require a valid JWT token corresponding to the relevant User.
-   - Deletions of any non-User entities that have dependencies with another non-User entity must be resolved.
+   - Deletions of any non-User entities that have dependencies with another non-User entity must be handled properly.
    - All endpoints must adhere to RESTful standards.
    - Must use GCP's Datastore NoSQL database to store User, Boat, and Load records.
    - No input-validation is required. Graders followed the guidelines written in the specifications document for any values sent to the API.
@@ -72,6 +77,8 @@ My choice was for my API to have Users, Boats, and Loads as my three entities.
    - All of the responses this API sends back to the user will have an appropriate 20* and 4** status code depending on the type of request and whether the operation was successful or not. A full list of supported status codes per type of request is available in the project PDF. 
    - For all responses with body content, all of the `self` attributes and values are not stored on Datastore but are added to the response by the API.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## API Highlights
 The following are some highlights of my API, which include the login website, what the user sees upon login, creating Boats and Loads, creating Boat-Load dependencies, fully or partially updating a Boat or Load, and deleting a Boat or Load, including how any Boat-Load dependencies are resolved. Full specifications can be found in this project's [API Spec Document](/assets/documents/lubranoa_project.pdf).
 
@@ -83,11 +90,15 @@ The following are some highlights of my API, which include the login website, wh
 
    ![Screenshot of the Auth0 login page with email and password fields, continue button, sign up link, and login with Google button.](/assets/images/493-01b-auth0_login.png)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Logged In
    
    After successful login, the user's information on Auth0 is displayed. If this is the first time the user has logged in, a User entity is created for them on the Google Datastore database. For API access, the user must copy the value of the `id_token` for use as a bearer token when making API calls.
 
-   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-02-jwt_info.png)  
+   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-02-jwt_info.png)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Create a Boat (Create User-Boat dependency)
    
@@ -95,11 +106,15 @@ The following are some highlights of my API, which include the login website, wh
 
    ![Screenshot of a Postman tab displaying a POST request using the user's JWT token to create a Boat object with a name, type, and length. The screenshot also displays a successful "201 Created" response from the API containing the new Boat object with an ID, name, type, length, an empty loads array, an owner ID, and a self attribute that contains a URL to the Boat.](/assets/images/493-03-create-boat.png)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Create a Load (No User-dependency)
    
    A create Load POST request needs no authorization but must have a body with the three required attributes. If successful, a new Load is created on Datastore with a Datastore generated ID, the three attributes, a carrier attribute set to NULL, and a self attribute that contains a URL to the Load.
 
    ![Screenshot of a Postman tab displaying a POST request to create a Load with an item name, volume, and creation date. The screenshot also displays a successful "201 Created" response from the API containing the new Load object with an ID, item, volume, creation date, carrier set to NULL, and a self attribute that contains a URL to the Load.](/assets/images/493-04-create-load.png)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Add a Load to a Boat (Add Boat-Load dependency)
    
@@ -119,6 +134,8 @@ The following are some highlights of my API, which include the login website, wh
     
    ![Screenshot of a Postman tab displaying a GET request to view the same Load object using it's ID value in the URL. The screenshot also displays a successful "200 OK" response that contains the requested Load object with the carrier attribute set to the Boat's ID that holds the Load.](/assets/images/493-05d-load-with-carrier.png)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Remove a Load from a Boat (Remove Boat-Load Dependency)
 
    DELETE a Load from a Boat. This removes the Load from the Boat's loads and sets the Load's carrier attribute to NULL, then updates both entities on Datastore. Succeeds only if the Boat exists, the Load exists, this Load is on that Boat, and the User owns the Boat. The following three images show the DELETE request and the resulting Load and Boat GETs to verify deletion.
@@ -127,16 +144,20 @@ The following are some highlights of my API, which include the login website, wh
    ![Screenshot of a Postman tab displaying a GET request to view the same Boat object using it's ID value in the URL and the user's JWT token. The screenshot also displays a successful "200 OK" response that contains the requested Boat object with an empty loads array after removing the Load from the Boat.](/assets/images/493-05f-load-removed.png)
    ![Screenshot of a Postman tab displaying a GET request to view the same Load object using it's ID value in the URL. The screenshot also displays a successful "200 OK" response that contains the requested Load object with the carrier attribute set to NULL after removing the Load from the Boat.](/assets/images/493-05g-load-carrier-removed.png)
 
-   
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Update Operations
    - Use PATCH request to partially update a Boat or Load 
    - Use PUT request to fully update a Boat or Load
-   
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Delete Operations
    - DELETE a Boat or Load
    - Special Case: Delete a Boat containing a Load (Removes User-Boat and Boat-Load dependencies)
    - Special Case: Delete a Load loaded on a Boat (Removes Boat-Load dependency)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Skills Used
 #### REST API Development:
@@ -156,9 +177,11 @@ The following are some highlights of my API, which include the login website, wh
 #### Documentation:
   - The project required creating an API specification document that details all the endpoints, their protected/unprotected status, valid status codes, sample requests, and responses. Clear and concise documentation was essential to provide a comprehensive understanding of the API's functionality.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Resources
 
-<!-- MARKDOWN LINKS & IMAGES -->
+<!-- Markdown links and images -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=ffd343
 [Python-url]: https://www.python.org/
