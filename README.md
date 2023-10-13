@@ -1,14 +1,27 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
 
-<!-- Centered title section with descriptive lines -->
+<!-- Title Section -->
 <div align="center">
+  <!-- Badges -->
+  <p>
+    <a href="www.linkedin.com/in/lubrano-alexander">
+      <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin" alt="linkedin link" />
+    </a>
+    <a href="https://lubranoa.github.io">
+      <img src="https://img.shields.io/badge/Personal_Site-47b51b?style=for-the-badge" alt="personal website link" />
+    </a>
+    <a href="https://github.com/lubranoa">
+      <img src="https://img.shields.io/badge/GitHub_Profile-8A2BE2?style=for-the-badge&logo=github" alt="github profile link" />
+    </a>
+  </p>
+  <!-- Titles and Subtitles -->
   <h1 align="center">Boat-Load REST API</h1>
   <p align="center">
     <b>A RESTful API for Managing Assets on the Google Cloud Platform with Auth0 Authentication</b>
   </p>
   <p align="center">
-    Spring 2023 · CS 493 Cloud Application Development · Oregon State University
+    Spring 2023 · <a href="https://ecampus.oregonstate.edu/soc/ecatalog/ecoursedetail.htm?subject=CS&coursenumber=493&termcode=ALL">CS 493 Cloud Application Development</a> · Oregon State University
   </p>
   <br />
 </div>
