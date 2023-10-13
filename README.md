@@ -12,9 +12,10 @@
       <img src="https://img.shields.io/badge/Personal_Site-47b51b?style=for-the-badge" alt="personal website link" />
     </a>
     <a href="https://github.com/lubranoa">
-      <img src="https://img.shields.io/badge/GitHub_Profile-8A2BE2?style=for-the-badge&logo=github" alt="github profile link" />
+      <img src="https://img.shields.io/badge/GitHub-8A2BE2?style=for-the-badge&logo=github" alt="github profile link" />
     </a>
   </p>
+  <br />
   <!-- Titles and Subtitles -->
   <h1 align="center">Boat-Load REST API</h1>
   <p align="center">
