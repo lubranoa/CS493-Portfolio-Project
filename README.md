@@ -5,7 +5,7 @@
 <div align="center">
   <!-- Badges -->
   <p>
-    <a href="www.linkedin.com/in/lubrano-alexander">
+    <a href="https://linkedin.com/in/lubrano-alexander">
       <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin" alt="linkedin link" />
     </a>
     <a href="https://lubranoa.github.io">
