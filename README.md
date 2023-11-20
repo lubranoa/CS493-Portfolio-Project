@@ -30,39 +30,25 @@
 <!-- Table of Contents -->
 <details>
   <summary>Table of Contents</summary>
-    
-  - [Description](#description)
-  - [Project Tech Stack](#project-tech-stack)
-  - [Project Information](#project-information)
-    - [Assignment Requirements](#assignment-requirements)
-    - [My Project's Entities](#my-projects-entities)
-    - [Notes](#notes)
-  - [API Highlights](#api-highlights)
-    - [Simple Login Website](#simple-login-website-using-auth0)
-    - [Logged In](#logged-in)
-    - [Create a Boat](#create-a-boat-create-user-boat-dependency)
-    - [Create a Load](#create-a-load-no-user-dependency)
-    - [Add Load to Boat](#add-a-load-to-a-boat-add-boat-load-dependency)
-    - [Remove Load from Boat](#remove-a-load-from-a-boat-remove-boat-load-dependency)
-    - [Update Operations](#update-operations)
-    - [Delete Operations](#delete-operations)
-  - [Skills Used](#skills-used)
-    - [REST API Development](#rest-api-development)
-    - [Google Cloud Platform](#google-cloud-platform)
-    - [User Authentication](#user-authentication)
-    - [Data Modeling](#data-modeling)
-    - [Pagination](#pagination)
-    - [Error Handling and Status Codes](#error-handling-and-status-codes)
-    - [Postman Testing](#postman-testing)
-    - [Documentation](#documentation)
-  - [Resources](#references)
+
+  - [Project Description](#project-description)
+  - [Technologies Used](#technologies-used)
+  - [Features](#features)
+  - [Usage](#usage)
+  - [Skills Applied](#skills-applied)
+  - [Contact](#contact)
+  - [Acknowledgments](#acknowledgements)
 
 </details>
 
-## Description
-This project from Cloud Application Development is a REST API implementation of a web server application using Google Cloud Platform (GCP). The goal of the project was to showcase the implementation of various features and requirements, including resource-based URLs, pagination, status codes, user authentication, and data storage using GCP Datastore. The application utilizes a Flask framework to build the web server that provides endpoints for creating, retrieving, updating, and deleting Boat and Load records, while User records are created upon first login. It incorporates an Auth0 authentication service via a simple website deployed on GCP App Engine that provides a link where users can register, log in, and log out of the Auth0 service. Once logged in, users can copy a time-sensitive JWT token to send with API requests as a bearer token. Any data is securely stored in Google Cloud Datastore, ensuring efficient data management. Error handling and response formatting functionalities, like pagination, are also included to enhance the user experience. Full specifications are detailed in this project's [API Spec Document](/assets/documents/lubranoa_project.pdf).
+<!-- Project Description -->
+## Project Description
 
-## Project Tech Stack
+This project is a Flask REST API that allows users to interact with entities stored in a Google Cloud Datastore database via resource-based Flask endpoints, JSON Web Tokens (JWT), and Postman. The user can get a time-sensitive JWT by logging in to the project's simple website deployed on Google Cloud App Engine. This was the final project for Cloud Application Development and had the goals of implementing a REST API that incorporated proper resource-based URLs, pagination, and appropriate HTTP status codes as well as implementing some sort of system for creating users and authorization.
+
+<!-- Technologies Used -->
+## Technologies Used
+
    - [![Python][Python]][Python-url]
    - [![Flask][Flask]][Flask-url]
    - [![Auth0][Auth0]][Auth0-url]
@@ -70,9 +56,34 @@ This project from Cloud Application Development is a REST API implementation of 
    - [![Postman][Postman]][Postman-url]
    - [![Dotenv][Dotenv]][Dotenv-url]
 
-## Project Information
+<!-- Features -->
+## Features
+  
+  - **API Access via Auth0**: 
+    - The project provides a simple website for users to create accounts and login to Auth0 to get an authorization token for API interactions.
+  - **Token-based Authorization**: 
+    - Once logged in, the Auth0 service generates a time-sensitive JSON Web Token to authorize API interactions.
+  - **Boat, Load, and User Entities**: 
+    - The API provides the entities, Boats, Loads, and Users, for a user to interact with. They each have different dependencies on each other in certain ways laid out in the [Usage section](#usage).
+  - **Boat Entity Authorization**:
+    - Due to assignment requirements, Boat entities are protected from alterations unless the Boat is owned by the User who is interacting with it.
+  - **RESTful CRUD Endpoints**: 
+    - Provides create, read, update, and delete endpoints that adhere to REST standards for Boat and Load entities, but only create and read for User entities.
+  - **Integration with GCP Datastore**:
+    - Persists Boat, Load, and User records on Google Cloud's Datastore NoSQL database when the user interacts with the API.
+  - **HTTP Status Code and Errors**:
+    - Provides appropriate HTTP 200 and 400 status codes and error messages to send back in API responses to the user.
+  - **Data Representation**:
+    - All entities are represented as JSON. Any responses with entities will have an API-generated `self` link pointing to its own record on Datastore. These `self` attributes are not stored persistently.
+  - **Result Pagination**:
+    - Paginates any responses to requests for reading all boats or all loads via a `next` link on every page of results except the last.
+  - *No Input Validation*:
+    - The assignment specifications stated there was no need for input validation as the graders would adhere to the guidelines outlined in our [personal documentation](/assets/documents/lubranoa_project.pdf).
+  
+
 ### Assignment Requirements
-Some of the major project requirements from the assignment's guidelines:
+
+Some of the major requirements from the assignment's guidelines:
    - Deploy a simple web page using GCP's App Engine for users to create an account and log in via Auth0, copy their current JWT token, and use it as a Bearer token to access the API using Postman. 
    - Must have three entities, Users, one User-dependent, and one User-independent. The two non-User entities must be dependent on each other in some way.
    - Have CRUD operations for each of the non-User entities. Each operation for the User-dependent entity must be protected and require a valid JWT token corresponding to the relevant User.
@@ -81,40 +92,84 @@ Some of the major project requirements from the assignment's guidelines:
    - Must use GCP's Datastore NoSQL database to store User, Boat, and Load records.
    - No input-validation is required. Graders followed the guidelines written in the specifications document for any values sent to the API.
 
-### My Project's Entities
-My choice was for my API to have Users, Boats, and Loads as my three entities. 
-  - Boats are dependent on Users (Users own them) so a user can only access their Boats and nobody else's. 
-  - Loads are independent of users (not owned by Users), so Users can view all Loads
-  - Loads and Boats can have a codependent relationship (if a Load is "loaded" on a Boat). 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Notes
-   - All of the responses this API sends back to the user will have an appropriate 20* and 4** status code depending on the type of request and whether the operation was successful or not. A full list of supported status codes per type of request is available in the project PDF. 
-   - For all responses with body content, all of the `self` attributes and values are not stored on Datastore but are added to the response by the API.
+<!-- Usage -->
+## Usage
+
+To use this API, the user must do three things, log in to the API's website, copy their generated token, and send it as a bearer token along with API requests. Before getting to that, an explanation of the Boat, Load, and User entities of the API is in order. For a full description of the entities, their relationships, and their endpoints, see the [project documentation](/assets/documents/lubranoa_project.pdf).
+
+#### Entity Data Models and Relationships
+
+The following is a quick outline of the API's entities' data models and relationships with the others. The assignment specifications called for three entities, a User entity and two non-User entities, one User-dependent and one User-independent, which had to be dependent on each other in some way. 
+
+  - **User Entities**
+    - Have two stored attributes, a unique ID and a name pulled from their Auth0 account.
+    - Created when a user creates an account with the Auth0 service.
+    - Cannot be edited.
+  - **Boat Entities** (User-dependent)
+    - Have six stored attributes, a unique ID number, name, Boat type, length, owner, and loads. Only name, type, length, and loads can be altered.
+    - Never allowed to have no owner, creating User-dependency.
+    - The `loads` attribute contains any Loads that are loaded onto a Boat.
+    - A User must be authorized to alter a Boat in any way.
+    - A User can only alter their own Boats and never anyone else's.
+  - **Load Entities** (User-independent)
+    - Have five stored attributes, a unique ID number, the item name it contains, its volume, creation date, and a carrier. Only the item name, volume, creation date, and carrier can be altered.
+    - The `carrier` attribute holds the ID number of the Boat that holds the Load or `NULL` if it hasn't been loaded onto a Boat, which creates the non-User entities' dependencies on each other.
+    - No User-dependency means any loads can be altered by anyone, except the special case where `carrier` is edited.
+    - Altering the `carrier` attribute requires User authorization because this operation also alters a Boat's `loads` attribute.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## API Highlights
-The following are some highlights of my API, which include the login website, what the user sees upon login, creating Boats and Loads, creating Boat-Load dependencies, fully or partially updating a Boat or Load, and deleting a Boat or Load, including how any Boat-Load dependencies are resolved. Full specifications can be found in this project's [API Spec Document](/assets/documents/lubranoa_project.pdf).
+#### Gaining Access to the API
 
-### Simple Login Website using Auth0
-   
-   This website provides a link for a user to begin a login process using Auth0. This redirects to an Auth0 page that allows a user to log in with their account or Google account or to sign up to use the website.
+  1) To access the API, a user must first create an account or log in to the API's simple website. This web page provides a link to the `\login` endpoint of the API, which begins a login process through Auth0. Click on the pictures to make them larger.
 
-   ![Screenshot of the simple login website with a login link.](/assets/images/493-01a-welcome_page.png)
+  Home Page                  | Auth0 Login               | User Info Page with JWT
+  :-------------------------:|:-------------------------:|:-------------------------:
+  ![Screenshot of the simple login website with a login link.](/assets/images/493-01a-welcome_page.png)  |  ![Screenshot of the Auth0 login page with email and password fields, continue button, sign up link, and login with Google button.](/assets/images/493-01b-auth0_login.png)  |  ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-02-jwt_info.png)
 
-   ![Screenshot of the Auth0 login page with email and password fields, continue button, sign up link, and login with Google button.](/assets/images/493-01b-auth0_login.png)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Logged In
-   
-   After successful login, the user's information on Auth0 is displayed. If this is the first time the user has logged in, a User entity is created for them on the Google Datastore database. For API access, the user must copy the value of the `id_token` for use as a bearer token when making API calls.
-
-   ![Screenshot of the web page of the user's information on Auth0 in JSON format after successful login](/assets/images/493-02-jwt_info.png)
+  2) After successful login, see above that the user's information on Auth0 is displayed to them along with a time-sensitive JWT token. If this is the first time the user has logged in, a User entity is created on the Google Datastore database. 
+  
+  3) For API interactions, the user must copy the value of the `id_token` for use as a bearer token when making API requests.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Create a Boat (Create User-Boat dependency)
+#### Interacting with the API
+
+The API has multiple endpoints that users can utilize to interact with the API. The API will send back all responses with an appropriate HTTP status code depending on the operation and/or any errors that occur in processing the request. All of the endpoints require any request bodies to be sent in JSON format. For full specifications, status codes, and example responses, check the [project documentation](/assets/documents/lubranoa_project.pdf).
+
+  - **READ** a Collection of All Users (No pagination)
+    - Method and Endpoint: GET `/users`
+    - Authorization: *None*
+    - The only endpoint for the Users entity.
+    - Allows a user to get a list of all users on the platform.
+  - **READ** Collections of Boats and Loads (Both support pagination)
+    - *Read* all Boats of a User (Read)
+      - Method and Endpoint: GET `/boats`
+      - Authorization: user JWT from Auth0
+      - Returns all boats owned by the user, 5 per page maximum.
+    - *Read* all Loads
+      - Method and Endpoint: GET `/loads`
+      - Authorization: *None*
+      - Returns all loads in the database
+    - Responses from both of these will contain a `next` attribute with a link to the next page of results. If not present in a response, then there are no more results.
+   - 
+      - Method and Endpoint: POST `/boats`
+      - Request body must contain a name, boat type, and length. Creation fails otherwise.
+      - During creation, the API uses Datastore to set up a unique ID, the owner of the boat, and an empty loads array.
+        
+        <details>
+          <summary>Screenshot of Boat Creation on Postman</summary>
+
+          ![Screenshot of a Postman tab displaying a POST request to create a Boat object with a name, type, and length. The screenshot also displays a successful "201 Created" response from the API containing the new Boat object with an ID, name, type, length, an empty loads array, an owner ID, and a self attribute that contains a URL to the Boat.](/assets/images/493-03-create-boat.png)
+
+        </details>
+
+
+  - Load Endpoints
+
+  - Non-user Relationship
    
    A create Boat POST request must have the copied JWT as a bearer token and must have a body with the three required attributes. If successful, a new Boat is created on Google Datastore with a Datastore generated ID, the three attributes, an empty loads array, an owner ID which is the 'sub' value from the Auth0 JWT, and a self attribute that contains a URL that points to the Boat.
 
@@ -160,40 +215,57 @@ The following are some highlights of my API, which include the login website, wh
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Update Operations
-   - Use PATCH request to partially update a Boat or Load 
-   - Use PUT request to fully update a Boat or Load
+<!-- Skills Applied -->
+## Skills Applied
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Delete Operations
-   - DELETE a Boat or Load
-   - Special Case: Delete a Boat containing a Load (Removes User-Boat and Boat-Load dependencies)
-   - Special Case: Delete a Load loaded on a Boat (Removes Boat-Load dependency)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Skills Used
 #### REST API Development:
+
   - The project involved designing and implementing a RESTful API using Python 3 and Flask. This included defining resource-based URLs, implementing CRUD (Create, Read, Update, Delete) operations for entities, and handling requests and responses.
+
 #### Google Cloud Platform:
+
   - The project required deploying the application on Google App Engine and using Datastore as the database for storing the application data. Knowledge of GCP services and deployment process was necessary.
+  
 #### User Authentication:
+
   - The project required implementing user authentication and authorization. This included providing endpoints for user account creation and login, generating and validating JWT (JSON Web Tokens), and protecting access to certain resources based on user authentication.
+
 #### Data Modeling:
+  
   - The project involved designing and modeling entities for the application. This included defining properties for each entity, establishing relationships between entities, and ensuring that entities meet the requirements specified in the project description.
+
 #### Pagination:
+
   - The project required implementing pagination for entity collections, displaying a limited number of entities per page, and providing a "next" link for navigating to the next page of results.
+
 #### Error Handling and Status Codes:
+
   - The project involved handling errors and returning appropriate status codes in the API responses. Knowledge of HTTP status codes (e.g., 200, 201, 204, 401, 403, 405, 406) and how to handle them was essential.
+
 #### Postman Testing:
+
   - The project required creating a Postman collection to test the API endpoints and verify their functionality. This included setting up test cases for CRUD operations, relationship creation and deletion, user account-related operations, and validating the response status codes.
+
 #### Documentation:
+
   - The project required creating an API specification document that details all the endpoints, their protected/unprotected status, valid status codes, sample requests, and responses. Clear and concise documentation was essential to provide a comprehensive understanding of the API's functionality.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Resources
+<!-- Contact -->
+## Contact
+
+Alexander Lubrano - [lubrano.alexander@gmail.com][email] - [LinkedIn][linkedin-url]
+
+Project Link: [https://github.com/lubranoa/<repo-name>][repo-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- Acknowledgements -->
+## Acknowledgments
+
+  - [Shields.io][shields-url]
+  - [Simple Icons][icons-url]
 
 <!-- Markdown links and images -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -214,3 +286,7 @@ The following are some highlights of my API, which include the login website, wh
 
 [Dotenv]: https://img.shields.io/badge/Dotenv-000000?style=for-the-badge&logo=dotenv&logoColor=ecd53f
 [Dotenv-url]: https://pypi.org/project/python-dotenv/
+
+[email]: mailto:lubrano.alexander@gmail.com
+[linkedin-url]: www.linkedin.com/in/lubrano-alexander
+[repo-url]: https://github.com/lubranoa/CS493-Portfolio-Project
