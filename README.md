@@ -44,7 +44,7 @@
       - [Interactions between Boats and Loads](#interactions-between-boats-and-loads)
   - [Skills Applied](#skills-applied)
   - [Contact](#contact)
-  - [Acknowledgments](#acknowledgements)
+  - [Acknowledgments](#acknowledgments)
 
 </details>
 
@@ -333,7 +333,7 @@ Project Link: [https://github.com/lubranoa/CS493-Portfolio-Project][repo-url]
 [Dotenv-url]: https://pypi.org/project/python-dotenv/
 
 [email]: mailto:lubrano.alexander@gmail.com
-[linkedin-url]: www.linkedin.com/in/lubrano-alexander
+[linkedin-url]: https://linkedin.com/in/lubrano-alexander
 [repo-url]: https://github.com/lubranoa/CS493-Portfolio-Project
 
 [auth0-python-url]: https://auth0.com/docs/quickstart/webapp/python
