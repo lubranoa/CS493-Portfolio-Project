@@ -339,3 +339,5 @@ Project Link: [https://github.com/lubranoa/CS493-Portfolio-Project][repo-url]
 [auth0-python-url]: https://auth0.com/docs/quickstart/webapp/python
 [auth0-auth-url]: https://auth0.com/docs/quickstart/backend/python/01-authorization
 [google-python-url]: https://cloud.google.com/appengine/docs/standard/python3/building-app
+[shields-url]: https://shields.io/
+[icons-url]: https://simpleicons.org/
