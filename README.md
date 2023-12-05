@@ -75,6 +75,7 @@ This project is a Flask REST API that allows users to interact with entities sto
   - Integration with GCP Datastore NoSQL database
   - Relevant HTTP status codes and error handling
   - All entities represented as JSON
+  - Creates resource links for entities in a response
   - Result pagination when getting collections of entities
   - *No Input Validation*
     - The assignment specifications stated there was no need for input validation as the graders would adhere to the guidelines outlined in our [personal documentation](/assets/documents/lubranoa_project.pdf).
@@ -100,7 +101,8 @@ The following is a quick outline of the API's entities' data models and relation
 
     - Have six stored attributes:
       - a unique `id` value and a boat's `name`, `type`, `length`, `owner`, and `loads` (array that holds any Loads "loaded" on a Boat)
-    - Only `name`, `type`, `length`, and `loads` can be altered by a user.
+      - Only `name`, `type`, `length`, and `loads` can be altered by a user.
+    - Will also have a dynamically generated `self` URL/link to itself, which is created at response-time by the API.
     - Never allowed to have no owner, creating User-dependency.
     - A User must be authorized to alter a Boat in any way. Thus, a User is only allowed to alter their own Boats.
 
@@ -108,7 +110,8 @@ The following is a quick outline of the API's entities' data models and relation
   
     - Have five stored attributes:
       - a unique `id` value, a Load's `item` name, `volume`, `creation_date`, and `carrier` (the Boat that "loaded" the Load, initially set to `NULL`)
-    - Only the `item`, `volume`, `creation_date`, and `carrier` can be altered by a user.
+      - Only the `item`, `volume`, `creation_date`, and `carrier` can be altered by a user.
+    - Will also have a dynamically generated `self` URL/link to itself, which is created at response-time by the API.
     - No User-dependency means any loads can be altered by anyone, except the special case where a `carrier` is edited. Altering it requires User authorization because this operation also alters a Boat's `loads` array.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -135,11 +138,13 @@ The API has multiple endpoints that users can utilize to interact with the API. 
 
   | Method  | Endpoint                     | Authorization  | Description                              |    
   | ------- | ---------------------------- | -------------- | ---------------------------------------- |
-  | GET     | `/users`                     | None           | Read a list of all Users. No pagination.
-  | GET     | `/boats`                     | JWT as Bearer  | Read a list of all the user's Boats, 5 per page max. Defaults to offset zero. Supports pagination.
-  | GET     | `/boats?limit=5&offset=<n>`  | JWT as Bearer  | Read a list of all the user's Boats, 5 per page max, starting at offset `n`. Supports pagination.
-  | GET     | `/loads`                     | None           | Read a list of all the user's Boats, 5 per page max. Defaults to offset zero. Supports pagination.
-  | GET     | `/loads?limit=5&offset=<n>`  | None           | Read a list of all the user's Boats, 5 per page max, starting at offset `n`. Supports pagination.
+  | GET     | `/users`                     | None           | Read a list of all Users. No pagination.  |
+  | GET     | `/boats`                     | JWT as Bearer  | Read a list of all the user's Boats. Supports pagination.  |
+  | GET     | `/boats?limit=5&offset=<n>`  | JWT as Bearer  | Read a list of all the user's Boats. Pagination skips first `n` Boats.  |
+  | GET     | `/loads`                     | None           | Read a list of all Loads. Supports pagination.  |
+  | GET     | `/loads?limit=5&offset=<n>`  | None           | Read a list of all Loads. Pagination skips first `n` Loads.  |
+
+For the two operations that support pagination, a full response of results is five maximum. If there are more, the returned list of results will also contain a `next` attribute that contains a link to the next set of results. Otherwise if there are no more results, `next` will be absent.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -185,9 +190,11 @@ These create or remove Boat and Load dependencies on each other. Because Boats a
 
   | Method  | Endpoint                            | Description                              |  
   | ------- | ----------------------------------- | ---------------------------------------- |
-  | PUT     | `/boats/<boat_id>/loads/<load_id>`  | Put a Load on one of the user's Boats. Fails if Load is already loaded somewhere or if the user doesn't own the Boat.  |
-  | DELETE  | `/boats/<boat_id>/loads/<load_id>`  | Remove a Load from one of the user's Boats. Fails if Load is not loaded on the specified Boat or if the user doesn't own the Boat.  |
+  | PUT     | `/boats/<boat_id>/loads/<load_id>`  | Add a Load to one of the user's Boats.   |
+  | DELETE  | `/boats/<boat_id>/loads/<load_id>`  | Remove a Load from one of the user's Boats.  |
   
+Both of these operations will fail if the user does not own the Boat that it is altering. But adding a Load to a Boat fails if the Load is already loaded somewhere, whereas removing a Load fails if the Load is not loaded on the specified Boat.
+
 The following screenshots show the loading and removal of a Load onto and off of a Boat owned by a User:
 
 <details>
