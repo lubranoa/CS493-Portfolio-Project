@@ -60,6 +60,7 @@ This project is a Flask REST API that allows users to interact with entities sto
    - [![Flask][Flask]][Flask-url]
    - [![Auth0][Auth0]][Auth0-url]
    - [![OAuth][OAuth]][OAuth-url]
+   - [![JWT][JWT]][JWT-url]
    - [![Google Cloud][Google-cloud]][Google-cloud-url]
    - [![Postman][Postman]][Postman-url]
    - [![Dotenv][Dotenv]][Dotenv-url]
@@ -244,6 +245,7 @@ Project Link: [https://github.com/lubranoa/CS493-Portfolio-Project][repo-url]
   
   - [Auth0: Python Tutorial][auth0-python-url]
   - [Auth0: Python API: Authorization][auth0-auth-url]
+  - [Introduction to JWTs][JWT-url]
   - [Google: Building a Python 3 App on App Engine][google-python-url]
   - [Shields.io][shields-url]
   - [Simple Icons][icons-url]
@@ -261,6 +263,9 @@ Project Link: [https://github.com/lubranoa/CS493-Portfolio-Project][repo-url]
 
 [OAuth]: https://img.shields.io/badge/Authlib_OAuth_Library-grey?style=for-the-badge
 [OAuth-url]: https://docs.authlib.org/en/latest/client/
+
+[JWT]: https://img.shields.io/badge/JSON_Web_Tokens_(JWT)-grey?style=for-the-badge&logo=jsonwebtokens
+[JWT-url]: https://jwt.io/introduction
 
 [Google-cloud]: https://img.shields.io/badge/Google%20Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white
 [Google-cloud-url]: https://cloud.google.com/
