@@ -56,14 +56,19 @@ This project is a Flask REST API that allows users to interact with entities sto
 <!-- Technologies Used -->
 ## Technologies Used
 
-   - [![Python][Python]][Python-url]
-   - [![Flask][Flask]][Flask-url]
-   - [![Auth0][Auth0]][Auth0-url]
-   - [![OAuth][OAuth]][OAuth-url]
-   - [![JWT][JWT]][JWT-url]
-   - [![Google Cloud][Google-cloud]][Google-cloud-url]
-   - [![Postman][Postman]][Postman-url]
-   - [![Dotenv][Dotenv]][Dotenv-url]
+  - Server
+    - [![Python][Python]][Python-url]
+    - [![Flask][Flask]][Flask-url]
+    - [![Dotenv][Dotenv]][Dotenv-url]
+    - [![Auth0][Auth0]][Auth0-url]
+    - [![OAuth][OAuth]][OAuth-url]
+    - [![JWT][JWT]][JWT-url]
+    - [![App-engine][App-engine]][App-engine-url] (Deployment)
+  - Database
+    - [![Datastore][Datastore]][Datastore-url]
+  - Client
+    - [![Postman][Postman]][Postman-url] (API Testing and Use)
+    - Can work with any client that can send requests with authorization such as Bearer tokens.
 
 <!-- Features -->
 ## Features
@@ -255,7 +260,7 @@ Project Link: [https://github.com/lubranoa/CS493-Portfolio-Project][repo-url]
 [Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=ffd343
 [Python-url]: https://www.python.org/
 
-[Flask]: https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask
+[Flask]: https://img.shields.io/badge/Flask-grey?style=for-the-badge&logo=flask
 [Flask-url]: https://flask.palletsprojects.com/en/3.0.x/
 
 [Auth0]: https://img.shields.io/badge/Auth0-16214d?style=for-the-badge&logo=auth0
@@ -267,13 +272,16 @@ Project Link: [https://github.com/lubranoa/CS493-Portfolio-Project][repo-url]
 [JWT]: https://img.shields.io/badge/JSON_Web_Tokens_(JWT)-grey?style=for-the-badge&logo=jsonwebtokens
 [JWT-url]: https://jwt.io/introduction
 
-[Google-cloud]: https://img.shields.io/badge/Google%20Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white
-[Google-cloud-url]: https://cloud.google.com/
+[Datastore]: https://img.shields.io/badge/Google_Cloud_Datastore-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white
+[Datastore-url]: https://cloud.google.com/datastore
+
+[App-engine]: https://img.shields.io/badge/Google_App_Engine-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white
+[App-engine-url]: https://cloud.google.com/appengine/?hl=en
 
 [Postman]: https://img.shields.io/badge/Postman-ef5b25?style=for-the-badge&logo=postman&logoColor=white
 [Postman-url]: https://www.postman.com/
 
-[Dotenv]: https://img.shields.io/badge/Dotenv-000000?style=for-the-badge&logo=dotenv&logoColor=ecd53f
+[Dotenv]: https://img.shields.io/badge/Dotenv-grey?style=for-the-badge&logo=dotenv&logoColor=ecd53f
 [Dotenv-url]: https://pypi.org/project/python-dotenv/
 
 [email]: mailto:lubrano.alexander@gmail.com
