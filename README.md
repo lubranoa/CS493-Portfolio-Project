@@ -74,15 +74,25 @@ This project is a Flask REST API that allows users to interact with entities sto
 ## Features
 
   - RESTful CRUD endpoints for API interactions
+
   - User, Boat, and Load entities with varied relationships
+
   - JSON Web Token-based (JWT) authorization for Boat records
+
   - Token generation through website with Auth0 service
+
   - Stateless client-server communication
+
   - Integration with GCP Datastore NoSQL database
+
   - Relevant HTTP status codes and error handling
+
   - All entities represented as JSON
+
   - Creates resource links for entities in a response
+
   - Result pagination when getting collections of entities
+  
   - *No Input Validation*
     - The assignment specifications stated there was no need for input validation as the graders would adhere to the guidelines outlined in our [personal documentation](/assets/documents/lubranoa_project.pdf).
 
@@ -227,11 +237,17 @@ The following screenshots show the loading and removal of a Load onto and off of
 ## Skills Applied
 
   - REST API Design and Implementation
+
   - User authentication and authorization using Auth0 and JWTs
+
   - Database integration using Google Cloud Datastore
+
   - HTTP Status Codes and API Error Handling
+
   - Google Cloud Platform services
+
   - Writing API Documentation
+
   - Deploying web applications via Google App Engine
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
