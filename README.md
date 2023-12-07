@@ -275,6 +275,8 @@ Project Link: [https://github.com/lubranoa/CS493-Portfolio-Project][repo-url]
   - [Shields.io][shields-url]
   - [Simple Icons][icons-url]
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- Markdown links and images -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=ffd343
