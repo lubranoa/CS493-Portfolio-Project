@@ -53,6 +53,8 @@
 
 This project is a Flask REST API that allows users to interact with entities stored in a Google Cloud Datastore database via resource-based Flask endpoints, JSON Web Tokens (JWT), and Postman. The user can get a time-sensitive JWT by logging in to the project's simple website deployed on Google Cloud App Engine. This was the final project for Cloud Application Development and had the goals of implementing a REST API that incorporated proper resource-based URLs, pagination, and appropriate HTTP status codes as well as implementing some sort of system for creating users and authorization.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- Technologies Used -->
 ## Technologies Used
 
@@ -69,6 +71,8 @@ This project is a Flask REST API that allows users to interact with entities sto
   - Client
     - [![Postman][Postman]][Postman-url] (API Testing and Use)
     - Can work with any client that can send requests with authorization such as Bearer tokens.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Features -->
 ## Features
