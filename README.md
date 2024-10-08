@@ -17,9 +17,9 @@
   </p>
   <br />
   <!-- Titles and Subtitles -->
-  <h1 align="center">Boat-Load REST API</h1>
+  <h1 align="center">Cloud-Deployed REST API with JWT Authentication</h1>
   <p align="center">
-    <b>A RESTful API for Managing Assets on the Google Cloud Platform with Auth0 Authentication</b>
+    <b>A RESTful API for Managing Boat and Load Assets on Google Cloud Platform with Auth0 Authentication</b>
   </p>
   <p align="center">
     Spring 2023 · <a href="https://ecampus.oregonstate.edu/soc/ecatalog/ecoursedetail.htm?subject=CS&coursenumber=493&termcode=ALL">CS 493 Cloud Application Development</a> · Oregon State University
