@@ -51,8 +51,7 @@
 <!-- Project Description -->
 ## Project Description
 
-This project is a Flask REST API that allows users to interact with entities stored in a Google Cloud Datastore database via resource-based Flask endpoints, JSON Web Tokens (JWT), and Postman. The user can get a time-sensitive JWT by logging in to the project's simple website deployed on Google Cloud App Engine. This was the final project for Cloud Application Development and had the goals of implementing a REST API that incorporated proper resource-based URLs, pagination, and appropriate HTTP status codes as well as implementing some sort of system for creating users and authorization.
-
+This Flask REST API enables users to manage entities stored in Google Cloud Datastore through resource-based endpoints, secured with JSON Web Tokens (JWT). Users obtain time-sensitive JWTs by logging into the project's website, deployed on Google Cloud App Engine. This final project for the Cloud Application Development course aimed to implement a REST API with proper resource-based URLs, pagination, appropriate HTTP status codes, and a user authentication system.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Technologies Used -->
@@ -61,9 +60,7 @@ This project is a Flask REST API that allows users to interact with entities sto
   - Server
     - [![Python][Python]][Python-url]
     - [![Flask][Flask]][Flask-url]
-    - [![Dotenv][Dotenv]][Dotenv-url]
     - [![Auth0][Auth0]][Auth0-url]
-    - [![OAuth][OAuth]][OAuth-url]
     - [![JWT][JWT]][JWT-url]
     - [![App-engine][App-engine]][App-engine-url] (Deployment)
   - Database
@@ -77,27 +74,27 @@ This project is a Flask REST API that allows users to interact with entities sto
 <!-- Features -->
 ## Features
 
-  - RESTful CRUD endpoints for API interactions
+  - Provides RESTful CRUD endpoints for API interactions
 
-  - User, Boat, and Load entities with varied relationships
+  - Stores User, Boat, and Load entities with varied relationships
 
-  - JSON Web Token-based (JWT) authorization for Boat records
+  - Uses JSON Web Token-based (JWT) authorization for Boat records
 
-  - Token generation through website with Auth0 service
+  - Generates JWTs through simple website with Auth0 service
 
-  - Stateless client-server communication
+  - Uses stateless client-server communication
 
-  - Integration with GCP Datastore NoSQL database
+  - Integrates with GCP Datastore NoSQL database
 
-  - Relevant HTTP status codes and error handling
+  - Returns relevant HTTP status codes and error handling
 
-  - All entities represented as JSON
+  - Represents all entities as JSON
 
-  - Creates resource links for entities in a response
+  - Dynamically creates resource links for entities in relevant responses
 
-  - Result pagination when getting collections of entities
+  - Returns result pagination when getting collections of entities
   
-  - *No Input Validation*
+  - *Has No Input Validation*
     - The assignment specifications stated there was no need for input validation as the graders would adhere to the guidelines outlined in our [personal documentation](/assets/documents/lubranoa_project.pdf).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -288,9 +285,6 @@ Project Link: [https://github.com/lubranoa/CS493-Portfolio-Project][repo-url]
 [Auth0]: https://img.shields.io/badge/Auth0-16214d?style=for-the-badge&logo=auth0
 [Auth0-url]: https://auth0.com/
 
-[OAuth]: https://img.shields.io/badge/Authlib_OAuth_Library-grey?style=for-the-badge
-[OAuth-url]: https://docs.authlib.org/en/latest/client/
-
 [JWT]: https://img.shields.io/badge/JSON_Web_Tokens_(JWT)-grey?style=for-the-badge&logo=jsonwebtokens
 [JWT-url]: https://jwt.io/introduction
 
@@ -302,9 +296,6 @@ Project Link: [https://github.com/lubranoa/CS493-Portfolio-Project][repo-url]
 
 [Postman]: https://img.shields.io/badge/Postman-ef5b25?style=for-the-badge&logo=postman&logoColor=white
 [Postman-url]: https://www.postman.com/
-
-[Dotenv]: https://img.shields.io/badge/Dotenv-grey?style=for-the-badge&logo=dotenv&logoColor=ecd53f
-[Dotenv-url]: https://pypi.org/project/python-dotenv/
 
 [email]: mailto:lubrano.alexander@gmail.com
 [linkedin-url]: https://linkedin.com/in/lubrano-alexander
