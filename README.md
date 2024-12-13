@@ -51,7 +51,7 @@
 <!-- Project Description -->
 ## Project Description
 
-This Flask REST API enables users to manage entities stored in Google Cloud Datastore through resource-based endpoints, secured with JSON Web Tokens (JWT). Users obtain time-sensitive JWTs by logging into the project's website, deployed on Google Cloud App Engine. This final project for the Cloud Application Development course aimed to implement a REST API with proper resource-based URLs, pagination, appropriate HTTP status codes, and a user authentication system.
+This Flask REST API enables users to manage entities stored in Google Cloud Datastore through resource-based endpoints, secured with JSON Web Tokens (JWT). Users obtain time-sensitive JWTs by logging into the project's website, deployed on Google Cloud App Engine. This final project for the Cloud Application Development course aimed to implement a REST API with proper resource-based URLs, pagination, appropriate HTTP status codes, and a user authentication system. The API was built to manage Boat and Load entities on Google Cloud and demonstrates a learned proficiency in building and deploying scalable REST APIs with JWT-based authentication on a cloud platform.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Technologies Used -->
@@ -74,28 +74,27 @@ This Flask REST API enables users to manage entities stored in Google Cloud Data
 <!-- Features -->
 ## Features
 
-  - Provides RESTful CRUD endpoints for API interactions
+  - Provides RESTful CRUD endpoints for API interactions.
 
-  - Stores User, Boat, and Load entities with varied relationships
+  - Stores User, Boat, and Load entities with varied relationships.
 
-  - Uses JSON Web Token-based (JWT) authorization for Boat records
+  - Implements JSON Web Token-based (JWT) authorization for Boat records.
 
-  - Generates JWTs through simple website with Auth0 service
+  - Generates JWTs through a simple website integrated with Auth0 service.
 
-  - Uses stateless client-server communication
+  - Implements stateless client-server communication adhering to RESTful principles.
 
-  - Integrates with GCP Datastore NoSQL database
+  - Integrates with Google Cloud Platform's Datastore NoSQL database.
 
-  - Returns relevant HTTP status codes and error handling
+  - Returns appropriate HTTP status codes with comprehensive error handling.
 
-  - Represents all entities as JSON
+  - Represents all entities in JSON format.
 
-  - Dynamically creates resource links for entities in relevant responses
+  - Dynamically generates resource links for entities in relevant responses.
 
-  - Returns result pagination when getting collections of entities
+  - Implements pagination for collections of entities.
   
-  - *Has No Input Validation*
-    - The assignment specifications stated there was no need for input validation as the graders would adhere to the guidelines outlined in our [personal documentation](/assets/documents/lubranoa_project.pdf).
+  - Input Validation: Not implemented, as per assignment specifications, assuming adherence to own [documented guidelines](/assets/documents/lubranoa_project.pdf).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
