@@ -236,19 +236,17 @@ The following screenshots show the loading and removal of a Load onto and off of
 <!-- Skills Applied -->
 ## Skills Applied
 
-  - REST API Design and Implementation
+  - Developed a RESTful API with resource-based URLs, pagination, and appropriate HTTP status codes.
 
-  - User authentication and authorization using Auth0 and JWTs
+  - Implemented secure user authentication and authorization using Auth0 and JSON Web Tokens (JWTs).
 
-  - Database integration using Google Cloud Datastore
+  - Integrated Google Cloud Datastore for efficient data storage and retrieval.
 
-  - HTTP Status Codes and API Error Handling
+  - Ensured stateless client-server communication adhering to RESTful principles.
 
-  - Google Cloud Platform services
+  - Deployed the application on Google App Engine.
 
-  - Writing API Documentation
-
-  - Deploying web applications via Google App Engine
+  - Authored comprehensive API documentation to facilitate user understanding and interaction.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
